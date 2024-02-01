@@ -1,0 +1,17 @@
+---
+
+- hosts: master
+  become: yes
+  tasks:
+    - name: Download Oh My Posh install script
+      ansible.builtin.get_url:
+        url: https://ohmyposh.dev/install.sh
+        dest: /tmp/install_oh_my_posh.sh
+        mode: '0755'
+
+    - name: Execute Oh My Posh install script
+      ansible.builtin.shell: 
+        cmd: bash /tmp/install_oh_my_posh.sh
+      args:
+        executable: /bin/bash
+

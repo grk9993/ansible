@@ -1,0 +1,10 @@
+---
+
+- hosts: worker
+  become: yes
+  tasks:
+    - name: Install unzip
+      ansible.builtin.apt:
+        name: unzip
+        state: present
+

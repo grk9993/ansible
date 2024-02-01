@@ -1,0 +1,15 @@
+---
+
+- hosts: master
+  become: yes
+  tasks:
+    - name: Add Oh My Posh init to .bashrc
+      ansible.builtin.lineinfile:
+        path: ~/.bashrc
+        insertbefore: '^PS1='
+        line: '{{ item }}'
+        state: present
+      loop:
+        - "eval \"$(oh-my-posh init bash)\""
+        - "eval \"$(oh-my-posh init bash --config ~/theme/clean-detailed.omp.json)\""
+

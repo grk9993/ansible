@@ -1,0 +1,11 @@
+---
+
+- hosts: worker 
+  become: yes
+  tasks:
+    - name: Download clean-detailed.omp.json from GitHub
+      ansible.builtin.get_url:
+        url: https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/clean-detailed.omp.json
+        dest: ~/theme/clean-detailed.omp.json
+        mode: '0644'
+

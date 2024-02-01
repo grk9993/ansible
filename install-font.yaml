@@ -1,0 +1,36 @@
+---
+
+- hosts: master
+  become: yes
+  tasks:
+    - name: Install fontconfig
+      ansible.builtin.apt:
+        name: fontconfig
+        state: present
+
+    - name: Download Meslo Nerd Font
+      ansible.builtin.get_url:
+        url: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Meslo.zip
+        dest: ~/Meslo.zip
+
+    - name: Create fonts directory
+      ansible.builtin.file:
+        path: ~/.local/share/fonts
+        state: directory
+        mode: '0755'
+
+    - name: Unzip Meslo Nerd Font
+      ansible.builtin.unarchive:
+        src: ~/Meslo.zip
+        dest: ~/.local/share/fonts
+        remote_src: yes
+        extra_opts: [--exclude=*Windows*]
+
+    - name: Remove Meslo.zip
+      ansible.builtin.file:
+        path: ~/Meslo.zip
+        state: absent
+
+    - name: Rebuild font cache
+      ansible.builtin.shell: fc-cache -fv
+
